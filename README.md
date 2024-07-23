@@ -1,2 +1,2 @@
 # Backend-Development-Projects
-All the projects for the Backend Developement
+All the projects made by me for the Backend Developement
