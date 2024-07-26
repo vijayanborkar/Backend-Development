@@ -85,7 +85,7 @@ app.get("/find-age", (req, res) => {
 // Question 8
 function findRequiredTime(days, hours) {
   let time = days * hours;
-  if ((time) => 30) {
+  if (time >= 30) {
     return "The time being dedicated is sufficient for learning functions";
   } else {
     return "The time being dedicated is not sufficient for learning functions";
@@ -94,8 +94,8 @@ function findRequiredTime(days, hours) {
 
 app.get("/is-time-sufficient", (req, res) => {
   let days = parseFloat(req.query.days);
-  let hours = parseFloat(req.query.days);
-  res.send(findRequiredTime(days, hours).toString());
+  let hours = parseFloat(req.query.hours);
+  res.send(findRequiredTime(days, hours));
 });
 
 app.listen(port, () => {
