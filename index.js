@@ -1,10 +1,9 @@
-let express = require("express");
+let express = require('express');
 let app = express();
 let port = 3000;
 
-// Exercise 1:
 
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+  console.log(`Example app listening at http://localhost:${port}`)
+})
