@@ -169,40 +169,66 @@ let stocks = [
 ];
 
 // Endpoint 1: Get the stocks sorted by pricing
-function sortPriceLowToHigh(product1, product2) {
-  return product1.price - product2.price;
+function sortByPricing(stocks, price) {
+  if (price === "low-to-high") {
+    return stocks.slice().sort((a, b) => a.price - b.price);
+  } else if (price === "high-to-low") {
+    return stocks.slice().sort((a, b) => (b.price = a.price));
+  }
+  return stocks;
 }
 
 app.get("/stocks/sort/pricing", (req, res) => {
-  let pricingCopy = stocks.slice();
-  let result = pricingCopy.sort(sortPriceLowToHigh);
+  let pricing = req.query.pricing;
+  let result = sortByPricing(stocks, pricing);
   res.json({ stocks: result });
 });
 
 // Endpoint 2: Get the stocks sorted based on their Growth.
-function sortGrowthLowToHigh(product1, product2) {
-  if (order === "highToLow") {
-    return product2.growth - product1.growth;
-  } else {
-    return product1.growth - product2.growth;
+function sortByGrowth(stocks, growth) {
+  if (growth === "low-to-high") {
+    return stocks.slice().sort((a, b) => a.growth - b.growth);
+  } else if (growth === "high-to-low") {
+    return stocks.slice().sort((a, b) => b.growth - a.growth);
   }
+  return stocks;
 }
 
 app.get("/stocks/sort/growth", (req, res) => {
-  let growthCopy = stocks.slice();
-  let result = growthCopy.sort(sortGrowthLowToHigh);
+  let growth = req.query.growth;
+  let result = sortByGrowth(stocks, growth);
   res.json({ stocks: result });
 });
 
 // Endpoint 3: Filter the stocks based on the 2 Stock Exchange (NSE. and BSE)
-function filterByExchange(product, exchange) {
-  return product.exchange.toString() === exchange.toString();
+function filterByExchange(stock, exchange) {
+  return stock.exchange.toLowerCase() === exchange.toLowerCase();
 }
 
 app.get("/stocks/filter/exchange", (req, res) => {
-  let exchangeCopy = stocks.slice();
-  let result = exchangeCopy.filter(filterByExchange);
+  let exchange = req.query.exchange;
+  let stocksCopy = stocks.slice();
+  let result = stocksCopy.filter((stock) => filterByExchange(stock, exchange));
   res.json({ stocks: result });
+});
+
+// Endpoint 4: Filter the stocks based on the Industrial Sector.
+function filterByStocksOnIndustrialSector(stock, industry) {
+  return stock.industry.toLowerCase() === industry.toLowerCase();
+}
+
+app.get("/stocks/filter/industry", (req, res) => {
+  let industry = req.query.industry;
+  let stocksCopy = stocks.slice();
+  let result = stocksCopy.filter((stock) =>
+    filterByStocksOnIndustrialSector(stock, industry),
+  );
+  res.json({ stocks: result });
+});
+
+// Endpoint 5: Send all available stocks
+app.get("/stocks", (req, res) => {
+  res.json({ stocks: stocks });
 });
 
 app.listen(port, () => {
