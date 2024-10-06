@@ -1,104 +1,103 @@
-let express = require('express');
-let { track } = require('./models/track.model');
-let { sequelize } = require('./lib/index');
+let express = require("express");
+let { track } = require("./models/track.model");
+let { sequelize } = require("./lib/index");
 
 let app = express();
-
 let movieData = [
   {
-    name: 'Raabta',
-    genre: 'Romantic',
+    name: "Raabta",
+    genre: "Romantic",
     release_year: 2012,
-    artist: 'Arijit Singh',
-    album: 'Agent Vinod',
+    artist: "Arijit Singh",
+    album: "Agent Vinod",
     duration: 4,
   },
   {
-    name: 'Naina Da Kya Kasoor',
-    genre: 'Pop',
+    name: "Naina Da Kya Kasoor",
+    genre: "Pop",
     release_year: 2018,
-    artist: 'Amit Trivedi',
-    album: 'Andhadhun',
+    artist: "Amit Trivedi",
+    album: "Andhadhun",
     duration: 3,
   },
   {
-    name: 'Ghoomar',
-    genre: 'Traditional',
+    name: "Ghoomar",
+    genre: "Traditional",
     release_year: 2018,
-    artist: 'Shreya Ghoshal',
-    album: 'Padmaavat',
+    artist: "Shreya Ghoshal",
+    album: "Padmaavat",
     duration: 3,
   },
   {
-    name: 'Bekhayali',
-    genre: 'Rock',
+    name: "Bekhayali",
+    genre: "Rock",
     release_year: 2019,
-    artist: 'Sachet Tandon',
-    album: 'Kabir Singh',
+    artist: "Sachet Tandon",
+    album: "Kabir Singh",
     duration: 6,
   },
   {
-    name: 'Hawa Banke',
-    genre: 'Romantic',
+    name: "Hawa Banke",
+    genre: "Romantic",
     release_year: 2019,
-    artist: 'Darshan Raval',
-    album: 'Hawa Banke (Single)',
+    artist: "Darshan Raval",
+    album: "Hawa Banke (Single)",
     duration: 3,
   },
   {
-    name: 'Ghungroo',
-    genre: 'Dance',
+    name: "Ghungroo",
+    genre: "Dance",
     release_year: 2019,
-    artist: 'Arijit Singh',
-    album: 'War',
+    artist: "Arijit Singh",
+    album: "War",
     duration: 5,
   },
   {
-    name: 'Makhna',
-    genre: 'Hip-Hop',
+    name: "Makhna",
+    genre: "Hip-Hop",
     release_year: 2019,
-    artist: 'Tanishk Bagchi',
-    album: 'Drive',
+    artist: "Tanishk Bagchi",
+    album: "Drive",
     duration: 3,
   },
   {
-    name: 'Tera Ban Jaunga',
-    genre: 'Romantic',
+    name: "Tera Ban Jaunga",
+    genre: "Romantic",
     release_year: 2019,
-    artist: 'Tulsi Kumar',
-    album: 'Kabir Singh',
+    artist: "Tulsi Kumar",
+    album: "Kabir Singh",
     duration: 3,
   },
   {
-    name: 'First Class',
-    genre: 'Dance',
+    name: "First Class",
+    genre: "Dance",
     release_year: 2019,
-    artist: 'Arijit Singh',
-    album: 'Kalank',
+    artist: "Arijit Singh",
+    album: "Kalank",
     duration: 4,
   },
   {
-    name: 'Kalank Title Track',
-    genre: 'Romantic',
+    name: "Kalank Title Track",
+    genre: "Romantic",
     release_year: 2019,
-    artist: 'Arijit Singh',
-    album: 'Kalank',
+    artist: "Arijit Singh",
+    album: "Kalank",
     duration: 5,
   },
 ];
 
-app.get('/seed_db', async (req, res) => {
+app.get("/seed_db", async (req, res) => {
   try {
     await sequelize.sync({ force: true });
     await track.bulkCreate(movieData);
-    res.status(200).json({ message: 'Database Seeding successful' });
+    res.status(200).json({ message: "Database Seeding successful" });
   } catch (error) {
     res
       .status(500)
-      .json({ message: 'Error seeding the data', error: error.message });
+      .json({ message: "Error seeding the data", error: error.message });
   }
 });
 
 app.listen(3000, () => {
-  console.log('Server is running on port 3000');
+  console.log("Server is running on port 3000");
 });
