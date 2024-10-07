@@ -1,5 +1,6 @@
 let { getMovies, getMovieById, addMovie } = require("../movie");
 
+// Exercise 4: Test get all movies
 describe("Movies Function", () => {
   it("Should get all movies", () => {
     let movies = getMovies();
@@ -12,6 +13,7 @@ describe("Movies Function", () => {
     ]);
   });
 
+  // Exercise 5: Test get movie by ID
   it("Should return a movie by id", () => {
     let movie = getMovieById(1);
     expect(movie).toEqual({
@@ -21,11 +23,13 @@ describe("Movies Function", () => {
     });
   });
 
+  // Exercise 6: Test get movie by non-existent ID
   it("Should return undefined for a non-existant movie", () => {
     let movie = getMovieById(99);
     expect(movie).toBeUndefined();
   });
 
+  // Exercise 7: Test add new movie
   it("Should add a new movie", () => {
     let newMovie = { title: "New Movie", director: "Director Name" };
     let addedMovie = addMovie(newMovie);
