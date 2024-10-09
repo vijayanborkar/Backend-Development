@@ -13,7 +13,7 @@ function getAuthors() {
   return authors;
 }
 
-app.length("/authors", (req, res) => {
+app.get("/authors", (req, res) => {
   res.json(getAuthors());
 });
 
