@@ -100,4 +100,20 @@ describe("API Endpoints", () => {
     expect(result.statusCode).toEqual(201);
     expect(result.body).toEqual(mockUser);
   });
+
+  it("should return 404 for non-existing review", async () => {
+    getReviewById.mockResolvedValue(null);
+
+    const result = await request(server).get("/reviews/details/999");
+
+    expect(result.statusCode).toEqual(404);
+  });
+
+  it("should return 404 for non-existing user", async () => {
+    getUserById.mockResolvedValue(null);
+
+    const result = await request(server).get("/users/details/888");
+
+    expect(result.statusCode).toEqual(404);
+  });
 });
