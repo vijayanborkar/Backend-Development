@@ -24,11 +24,11 @@ afterAll((done) => {
   server.close(done);
 });
 
-describe("Function Tests", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-  });
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
+describe("Function Tests", () => {
   // Exercise 4: Test get all employees
   test("getEmployees should return a list of employees", () => {
     const mockEmployees = [
@@ -58,7 +58,7 @@ describe("Function Tests", () => {
   });
 
   // Exercise 6: Test get employee by non-existent ID
-  test("getEmployeeById should return undefined if employee if not found", () => {
+  test("getEmployeeById should return undefined if employee is not found", () => {
     getEmployeeById.mockReturnValue(undefined);
 
     let result = getEmployeeById(999);

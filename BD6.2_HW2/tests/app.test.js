@@ -16,64 +16,68 @@ beforeAll((done) => {
 });
 
 afterAll((done) => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  server.close(done);
+});
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+describe("Function Tests", () => {
+  // Exercise 4: Test get all movies
+  test("getMovies should return a list of movies", () => {
+    const mockMovies = [
+      { id: 1, title: "The Shawshank Redemption", director: "Frank Darabont" },
+      { id: 2, title: "The Godfather", director: "Francis Ford Coppola" },
+    ];
+
+    getMovies.mockReturnValue(mockMovies);
+
+    let result = getMovies();
+
+    expect(result).toEqual(mockMovies);
+    expect(getMovies).toHaveBeenCalled();
   });
-});
 
-// Exercise 4: Test get all movies
-test("getMovies should return a list of movies", () => {
-  const mockMovies = [
-    { id: 1, title: "The Shawshank Redemption", director: "Frank Darabont" },
-    { id: 2, title: "The Godfather", director: "Francis Ford Coppola" },
-  ];
+  // Exercise 5: Test get movie by ID
+  test("getMovieById should return movie details", () => {
+    const mockMovies = {
+      id: 1,
+      title: "The Shawshank Redemption",
+      director: "Frank Darabont",
+    };
 
-  getMovies.mockReturnValue(mockMovies);
+    getMovieById.mockReturnValue(mockMovies);
 
-  let result = getMovies();
+    let result = getMovieById(1);
 
-  expect(result).toEqual(mockMovies);
-  expect(getMovies).toHaveBeenCalled();
-});
+    expect(result).toEqual(mockMovies);
+    expect(getMovieById).toHaveBeenCalledWith(1);
+  });
 
-// Exercise 5: Test get movie by ID
-test("getMovieById should return movie details", () => {
-  const mockMovies = {
-    id: 1,
-    title: "The Shawshank Redemption",
-    director: "Frank Darabont",
-  };
+  // Exercise 6: Test get movie by non-existent ID
+  test("getMovieById should return undefined if movie is not found", () => {
+    getMovieById.mockReturnValue(undefined);
 
-  getMovieById.mockReturnValue(mockMovies);
+    let result = getMovieById(999);
 
-  let result = getMovieById(1);
+    expect(result).toBeUndefined();
+    expect(getMovieById).toHaveBeenCalledWith(999);
+  });
 
-  expect(result).toEqual(mockMovies);
-  expect(getMovieById).toHaveBeenCalledWith(1);
-});
+  // Exercise 7: Test add new movie
+  test("addMovie should add a new movie", () => {
+    const newMovie = {
+      movieId: 4,
+      title: "Inception",
+      director: "Christopher Nolan",
+    };
 
-// Exercise 6: Test get movie by non-existent ID
-test("getMovieById should return undefined if movie is not found", () => {
-  getMovieById.mockReturnValue(undefined);
+    addMovie.mockReturnValue(newMovie);
 
-  let result = getMovieById(999);
+    let result = addMovie(newMovie);
 
-  expect(result).toBeUndefined();
-  expect(getMovieById).toHaveBeenCalledWith(999);
-});
-
-// Exercise 7: Test add new movie
-test("addMovie should add a new movie", () => {
-  const newMovie = {
-    movieId: 4,
-    title: "Inception",
-    director: "Christopher Nolan",
-  };
-
-  addMovie.mockReturnValue(newMovie);
-
-  let result = addMovie(newMovie);
-
-  expect(result).toEqual(newMovie);
-  expect(addMovie).toHaveBeenCalledWith(newMovie);
+    expect(result).toEqual(newMovie);
+    expect(addMovie).toHaveBeenCalledWith(newMovie);
+  });
 });
