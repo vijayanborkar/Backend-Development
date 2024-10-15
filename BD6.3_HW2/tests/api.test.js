@@ -66,10 +66,10 @@ describe("API Endpoints", () => {
     expect(result.body).toEqual(mockEmployees);
   });
 
-  it("should return 404 for a non-existing employee", async (req, res) => {
+  it("should return 404 for a non-existing employee", async () => {
     getEmployeeById.mockResolvedValue(null);
 
-    const result = request(server).get("/employees/details/999");
+    const result = await request(server).get("/employees/details/999");
 
     expect(result.statusCode).toEqual(404);
   });
@@ -83,7 +83,7 @@ describe("API Endpoints", () => {
     };
     addEmployee.mockResolvedValue(mockEmployees);
 
-    const result = (await request(server).post("/employees/new")).send({
+    const result = await request(server).post("/employees/new").send({
       name: "Alice Brown",
       email: "alice.brown@example.com",
       department: "Sales",
