@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const { getAllEmployees, getEmployeeById } = require("./controllers");
+const { getAllEmployees, getEmployeesById } = require("./controllers");
 
 const app = express();
 
@@ -15,10 +15,12 @@ app.get("/employees", async (req, res) => {
 
 // Endpoint to get employee details by id
 app.get("/employees/details/:id", async (req, res) => {
-  let employee = getEmployeeById(parseInt(req.params.id));
-  res.json({
-    employee,
-  });
+  let employee = getEmployeesById(parseInt(req.params.id));
+  if (!employee) {
+    return res.status(404).json({ error: "Employee not found" });
+  }
+  res.json({ employee });
 });
 
 module.exports = { app };
+

@@ -27,7 +27,7 @@ function getAllEmployees() {
 }
 
 function getEmployeesById(id) {
-  return employees.find((employees) => employee.employeeId === id);
+  return employees.find((employee) => employee.employeeId === id);
 }
 
 module.exports = { getAllEmployees, getEmployeesById };
