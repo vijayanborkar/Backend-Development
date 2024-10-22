@@ -48,16 +48,17 @@ describe("Controller Function Tests", () => {
     ];
 
     getAllBooks.mockReturnValue(mockedBooks);
-    let result = getAllBooks;
+    let result = getAllBooks();
     expect(result).toEqual(mockedBooks);
     expect(result.length).toBe(3);
   });
 });
 
-describe("API Endpoints Tests", async () => {
+describe("API Endpoints Tests", () => {
   beforeAll(() => {
     jest.clearAllMocks();
   });
+
   it("GET /books should get all books", async () => {
     let mockedBooks = [
       {

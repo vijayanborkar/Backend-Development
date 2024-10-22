@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Exercise 1: Retrieve All Books
 app.get("/books", async (req, res) => {
-  const books = getAllBooks;
+  const books = getAllBooks();
   res.json({ books });
 });
 
@@ -21,3 +21,5 @@ app.get("/books/details/:id", async (req, res) => {
   }
   res.json({ book });
 });
+
+module.exports = { app };

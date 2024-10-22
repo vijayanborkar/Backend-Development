@@ -24,7 +24,7 @@ function getAllBooks() {
 }
 
 function getBookById(id) {
-  return books.find((book) => book.bookid === id);
+  return books.find((book) => book.bookId === id);
 }
 
 module.exports = { getAllBooks, getBookById };
