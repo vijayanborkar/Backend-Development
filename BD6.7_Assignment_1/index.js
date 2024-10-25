@@ -38,8 +38,11 @@ app.get("/shows/:id", async (req, res) => {
 
 // Exercise 3: Add a New Show
 app.post("/shows", (req, res) => {
-  const error = addShow(req.body);
-  if (error) return res.status(400).send(error);
+  const errors = addShow(req.body);
+
+  if (errors) {
+    return res.status(400).json({ error: errors });
+  }
 
   const show = { id: shows.length + 1, ...req.body };
   shows.push(show);

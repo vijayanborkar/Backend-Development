@@ -20,21 +20,21 @@ function getShowById(id) {
 }
 
 function addShow(show) {
+  const errors = [];
+
   if (!show.title || typeof show.title !== "string") {
-    return "Title is required and should be a string.";
+    errors.push("Title is required and should be a string.");
   }
+
   if (!show.theatreId || typeof show.theatreId !== "number") {
-    return "Theatre ID is required and should be a number.";
+    errors.push("Theatre ID is required and should be a number.");
   }
+
   if (!show.time || typeof show.time !== "string") {
-    return "Time is required and should be a string.";
+    errors.push("Time is required and should be a string.");
   }
 
-  const newShowId = shows.length > 0 ? shows[shows.length - 1].showId + 1 : 1;
-  const newShow = { showId: newShowId, ...show };
-  shows.push(newShow);
-
-  return newShow;
+  return errors.length > 0 ? errors : null;
 }
 
 module.exports = { shows, theatres, getAllShows, getShowById, addShow };

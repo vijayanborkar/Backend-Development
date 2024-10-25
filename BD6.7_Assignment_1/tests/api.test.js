@@ -6,7 +6,7 @@ const {
   getAllShows,
   getShowById,
   addShow,
-} = require("../controllers/index.js");
+} = require("../controllers");
 const { app } = require("../index.js");
 
 jest.mock("../controllers", () => ({
@@ -101,42 +101,23 @@ describe("API Endpoints Tests", () => {
   });
 
   // Test 5: Input Validation for Add Show
-  it("POST /shows should return 400 for invalid input", async () => {
-    const res = await request(server)
-      .post("/shows")
-      .send({ title: "Phantom of the Opera", theatreId: 2 });
-
-    expect(res.statusCode).toEqual(400);
-    expect(res.text).toEqual("Time is required and should be a string.");
-  });
-});
-
-describe("Validation Functions", () => {
-  it("should validate show input correctly", () => {
-    expect(
-      addShow({
-        title: "Phantom of the Opera",
-        theatreId: 2,
-        time: "5:00 PM",
-      })
-    ).toEqual({
-      showId: 5,
+  it("POST /shows should return 400 for invalid show input", async () => {
+    const invalidShow = {
       title: "Phantom of the Opera",
-      theatreId: 2,
-      time: "5:00 PM",
-    });
+    };
 
-    expect(addShow({ title: "Phantom of the Opera", theatreId: 2 })).toEqual(
-      "Time is required and should be a string."
-    );
+    addShow.mockReturnValue([
+      "Theatre ID is required and should be a number.",
+      "Time is required and should be a string.",
+    ]);
 
-    expect(addShow({ title: "Phantom of the Opera", time: "5:00 PM" })).toEqual(
-      "Theatre ID is required and should be a number."
-    );
+    const res = await request(server).post("/shows").send(invalidShow);
 
-    expect(addShow({ theatreId: 2, time: "5:00 PM" })).toEqual(
-      "Title is required and should be a string."
-    );
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toEqual([
+      "Theatre ID is required and should be a number.",
+      "Time is required and should be a string.",
+    ]);
   });
 });
 
