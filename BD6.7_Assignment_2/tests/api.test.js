@@ -109,14 +109,24 @@ describe("API Endpoints Tests", () => {
 
   // Test 5: Input Validation for Add Trade
   it("POST /trades should return 400 for invalid input", async () => {
-    const res = await request(server).post("/trades").send({
+    const invalidTrade = {
       stockId: 1,
-      quantity: 10,
-      tradeType: "buy",
-    });
+    };
 
-    expect(res.statusCode).toEqual(400);
-    expect(res.text).toEqual("TradeDate is required and should be a string.");
+    addTrade.mockReturnValue([
+      "Quantity is required and should be a number.",
+      "TradeType is required and should be a string.",
+      "TradeDate is required and should be a string.",
+    ]);
+
+    const res = await request(server).post("/trades").send(invalidTrade);
+
+    expect(res.statusCode).toBe(400);
+    expect(res.body.error).toEqual([
+      "Quantity is required and should be a number.",
+      "TradeType is required and should be a string.",
+      "TradeDate is required and should be a string.",
+    ]);
   });
 });
 

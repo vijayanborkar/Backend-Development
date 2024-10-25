@@ -41,6 +41,8 @@ function getStockByTicker(tickerSymbol) {
 }
 
 function addTrade(trade) {
+  const errors = [];
+
   if (!trade.stockId || typeof trade.stockId !== "number") {
     return "StockId is required and should be a number.";
   }
@@ -53,7 +55,7 @@ function addTrade(trade) {
   if (!trade.tradeDate || typeof trade.tradeDate !== "string") {
     return "TradeDate is required and should be a string.";
   }
-  return null;
+  return errors.length > 0 ? errors : null;
 }
 
 module.exports = {

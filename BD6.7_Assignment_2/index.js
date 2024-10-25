@@ -49,8 +49,11 @@ app.get("/stocks/:ticker", async (req, res) => {
 
 // Test 3: Add a New Trade
 app.post("/trades", (req, res) => {
-  const error = addTrade(req.body);
-  if (error) return res.status(400).send(error);
+  const errors = addTrade(req.body);
+
+  if (errors) {
+    return res.status(400).json({ error: errors });
+  }
 
   const trade = { id: trades.length + 1, ...req.body };
   trades.push(trade);
